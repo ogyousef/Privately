@@ -1,0 +1,88 @@
+{messages.map((msg) => {
+          if (msg.data()["sender"] === user.uid) {
+            return (
+              <div className="flex items-end justify-end">
+                <div className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+                  <div className="chat-message">
+                    <div className="flex items-end">
+                      <div className="flex flex-col space-y-2 text-s max-w-5 mx-2 order-2 items-start">
+                        <MessageBox
+                          position={"right"}
+                          title={"Name"}
+                          titleColor={""}
+                          type={"text"}
+                          text={msg.data()["MsgText"]}
+                          data={{
+                            uri: "https://facebook.github.io/react/img/logo.svg",
+                            status: {
+                              click: false,
+                              loading: 0,
+                            },
+                          }}
+                          replyButton={true}
+                          removeButton={true}
+                          status={"read"}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <img
+                  src={
+                    user?.photoURL ||
+                    "https://facebook.github.io/react/img/logo.svg"
+                  }
+                  alt="My profile"
+                  className="w-6 h-6 rounded-full order-2"
+                ></img>
+              </div>
+            );
+          } else {
+            return (
+              <div className="flex items-end ">
+                <div className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+                  <div className="chat-message">
+                    <div className="flex items-end">
+                      <div className="flex flex-col space-y-2 text-s max-w-5 mx-2 order-2 items-end">
+                        <MessageBox
+                          position={"left"}
+                          title={"Name"}
+                          titleColor={"red"}
+                          type={"text"}
+                          text={msg.data()["MsgText"]}
+                          data={{
+                            uri: "https://facebook.github.io/react/img/logo.svg",
+                            status: {
+                              click: false,
+                              loading: 0,
+                            },
+                          }}
+                          avatar={
+                            "https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=144&h=144"
+                          }
+                          replyButton={true}
+                          removeButton={true}
+                          status={"read"}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          }
+        })}
+
+
+        <input
+              type="text"
+              placeholder="Write your message!"
+              className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3"
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleSend(e.target.value);
+                  e.target.value = ""
+                }
+                
+              }}
+            />

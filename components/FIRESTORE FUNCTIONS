@@ -1,0 +1,90 @@
+
+async function printCollections() {
+  const querySnapshot = await getDocs(collection(db, "Users"));
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id);
+  });
+}
+//printCollections();
+// Add to collection
+
+const newUser = {
+  name: "John Doe",
+  email: "johndoe@example.com",
+  age: 30,
+};
+const newUser2 = {
+  name: "Joh222n Doe",
+  email: "johndo22e@example.com",
+  age: 320,
+};
+
+async function AddtoCollection() {
+  //--- With Custome ID
+  const userCollectionRef = doc(db, "Users", "NewUser");
+  await setDoc(userCollectionRef, newUser);
+  //------- With Random Id
+  const userCollectionRef2 = collection(db, "Users");
+  await addDoc(userCollectionRef2, newUser2);
+  // ---- With Random Id
+  const docRef = await addDoc(collection(db, "Users"), {
+    name: "Tokyo",
+    country: "Japan",
+  });
+  // ===
+}
+
+// Update a Collection
+
+async function UpdateCollection() {
+  const docRef = doc(db, "Users", "NewUser");
+
+  // Update the timestamp field with the value from the server
+  await setDoc(docRef, {
+    name: "Frank",
+    favorites: {food: "Pizza", color: "Blue", subject: "recess", },
+    age: 12,
+    Id:"w5yWE5YHDDSloo8VQuLNOPZStRp2",
+  });
+}
+
+//UpdateCollection();
+
+//Delete From Collection
+async function DeleteCollection() {
+  //Delete Completely
+  const deleteRef = doc(db, "Users", "Yousef");
+  //await deleteDoc(deleteRef);
+  //Delete Data
+  await updateDoc(deleteRef, {
+    Email: deleteField(),
+  });
+}
+//DeleteCollection();
+
+// Read something from Collection
+async function GetCollection() {
+  const readRef = doc(db, "Users", "Yousef");
+  const UsersRef = collection(db, "Users");
+  const docSnap = await getDoc(readRef);
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+  } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
+  }
+  const DeleteIds = [];
+  const q = query(UsersRef, where("country", "==", "Japan"));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc1) => {
+    // doc1.data() is never undefined for query doc1 snapshots
+    console.log(doc1.id, " => ", doc1.data());
+    DeleteIds.push(doc1.id);
+    //deleteDoc(db, 'Users', doc1.id);
+    const deleteRef = doc(db, "Users", doc1.id);
+     deleteDoc(deleteRef);
+  });
+
+  
+}
+//GetCollection();

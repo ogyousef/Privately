@@ -1,26 +1,36 @@
+'use client';
+
 import 'styles/globals.css'
+import Navbar from "components/Nav";
+import Chat from 'components/Chat';
+import ChatLists from '@/components/ChatLists';
+import { UserAuth,AuthContextProvider } from '../context/AuthContext';
+// import { ChatList } from 'react-chat-elements';
 
-import Nav from "components/Nav";
-import  Provider  from 'components/Provider';
+// export const metadata = {
+//   title: 'Privately',
+//   description: 'Create an annyomoys shareable chats',
+// };
 
-export const metadata = {
-  title: 'Privately',
-  description: 'Create an annyomoys shareable chats',
-}
 
 export default function RootLayout({ children }) {
+
+    
   return (
     <html lang='en'>
     <body>
-      <Provider>
-        <div className='main'>
-          <div className="gardient" />
+
+      <AuthContextProvider>
+      <div className='main'>
         </div>
-        <main className='app'>
-          <Nav />
+        <div className='app '>
+
+          <Navbar />
           {children}
-        </main>
-        </Provider>
+
+        </div>
+      </AuthContextProvider>
+        
     </body>
   </html>
   )
